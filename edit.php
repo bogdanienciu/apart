@@ -131,70 +131,35 @@ $categories = $categoriesInventory->all();
 				</div>
 			</div>
 	</div>
-			
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
-						<div class="col-sm-10">
-							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[0]->getUrl(); ?>"/>
-						</div>
+		
+	<div class="row">
+		<?php for ($i = 0; $i < 10; $i++): ?>
+			<?php
+				$url = '';
+
+				if (isset($apartmentPictures[$i])) {
+					$url = $apartmentPictures[$i]->getUrl();
+				}
+			?>
+
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
+					<div class="col-sm-10">
+						<input type="text" name="image<?php echo $i; ?>" class="form-control" value="<?php echo $url; ?>"/>
 					</div>
 				</div>
-
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
-						<div class="col-sm-10">
-							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[1]->getUrl(); ?>"/>
-						</div>
-					</div>			
-				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
-						<div class="col-sm-10">
-							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[2]->getUrl(); ?>"/>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
-						<div class="col-sm-10">
-							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[3]->getUrl(); ?>"/>
-						</div>
-					</div>			
-				</div>
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
-						<div class="col-sm-10">
-							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[4]->getUrl(); ?>"/>
-						</div>
-					</div>			
-				</div>
-
-				<div class="col-sm-6">
-					<div class="form-group">
-						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
-						<div class="col-sm-10">
-							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[5]->getUrl(); ?>"/>
-						</div>
-					</div>			
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-default active">Submit</button>
-				</div>
-			</div>
-
-		</form>
+		<?php endfor; ?>
 	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-default active">Submit</button>
+		</div>
+	</div>
+
+	</form>
+</div>
 </body>
 </html>

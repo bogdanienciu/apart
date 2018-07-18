@@ -36,14 +36,22 @@ class MySQLConnection
 
 		$insert = $this->connection->prepare("INSERT INTO $table ($columnsString)
    			VALUES($valuesPlaceholder)");
-		$insert->execute($fields);
+		$ok = $insert->execute($fields);
+
+		if (!$ok) {
+			dd($this->connection->errorInfo());
+		}
 
 		return $this->connection->lastInsertId();
 	}
 
 	public function select($sql, $params = []) {
 		$select = $this->connection->prepare($sql);
-		$select->execute($params);
+		$ok = $select->execute($params);
+
+		if (!$ok) {
+			dd($this->connection->errorInfo());
+		}
 
 		return $select->fetchAll();
 	}
@@ -68,12 +76,16 @@ class MySQLConnection
 		$sql = "update $table set $setString where id = ?";
 
 		$update = $this->connection->prepare($sql);
-		$update->execute($params);
+		$ok = $update->execute($params);
+
+		if (!$ok) {
+			dd($this->connection->errorInfo());
+		}
 	}
 
-	public function delete($table, $id) {
+	public function delete($table, $id, $column = 'id') {
 		// $sql = "delete from $table where id = ?";
-		$sql = "update $table set deleted_at = now() where id = ?";
+		$sql = "update $table set deleted_at = now() where $column = ?";
 
 		$delete = $this->connection->prepare($sql);
 		$delete->execute([$id]);

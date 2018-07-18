@@ -13,7 +13,7 @@ $validator->rule('required', ['name']);
 if($validator->validate()) {
     $inventory = new Apartments();
 
-	$inventory->createApartment($_REQUEST);
+	$inventory->create($_REQUEST);
 
 	header('Location: apartments.php');
 } else {

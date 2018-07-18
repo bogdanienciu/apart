@@ -8,7 +8,7 @@ use App\Models\Apartment;
  */
 class Apartments extends Inventory
 {
-	public function createApartment($fields) {
+	public function create($fields) {
 		$apartmentId = $this->mysql->insert(
 			'apartments',
 			[
@@ -30,7 +30,7 @@ class Apartments extends Inventory
 			]
 		);
 		
-		for ($i = 1; $i < 10; $i++) {
+		for ($i = 0; $i < 10; $i++) {
 			if (isset($fields['image' . $i])) {
 				$this->mysql->insert(
 					'apartment_pictures', 
@@ -96,7 +96,8 @@ class Apartments extends Inventory
 				INNER JOIN specifications on specifications.id = apartment_specifications.specification_id
 				where
 					apartment_id = ?
-					and category_id = ?', [$apartment->getId(), $category->getId()]
+					and category_id = ?
+					and apartment_specifications.deleted_at is null', [$apartment->getId(), $category->getId()]
 			);
 
 			// Ii zice categoriei sa isi seteze specificatiile
@@ -105,7 +106,9 @@ class Apartments extends Inventory
 
 		$apartment_pictures = $this->mysql->select('SELECT apartment_pictures.id, apartment_pictures.url
 			FROM `apartment_pictures`
-			where apartment_id = ?', [$apartment->getId()]);
+			where
+				apartment_id = ?
+				and deleted_at is null', [$apartment->getId()]);
 
 		$apartment->setApartmentPictures($apartment_pictures);
 
@@ -114,7 +117,52 @@ class Apartments extends Inventory
 	}
 
 	public function update($id, $fields) {
-		$this->mysql->update('apartments', $id, $fields);
+		$this->mysql->update('apartments', $id, [
+			'name' => $fields['name'],
+			'details' => $fields['details'],
+			'nr_camere' => $fields['nr_camere'],
+			'suprafata_utila' => $fields['suprafata_utila'],
+			'compartimentare' => $fields['compartimentare'],
+			'confort' => $fields['confort'],
+			'etaj' => $fields['etaj'],
+			'nr_bai' => $fields['nr_bai'],
+			'an_constructie' => $fields['an_constructie'],
+			'structura_rezistenta' => $fields['structura_rezistenta'],
+			'lift' => $fields['lift'],
+			'tip_imobil' => $fields['tip_imobil'],
+			'regim_inaltime' => $fields['regim_inaltime'],
+			'nr_garaje' => $fields['nr_garaje'],
+		]);
+
+		$this->mysql->delete('apartment_pictures', $id, 'apartment_id');
+
+		for ($i = 0; $i < 10; $i++) {
+			if (isset($fields['image' . $i]) && $fields['image' . $i] != '') {
+				$this->mysql->insert(
+					'apartment_pictures', 
+					[
+						'apartment_id' => $id,
+						'url' => $fields['image' . $i]
+					]
+				);
+			}
+		}
+
+		$this->mysql->delete('apartment_specifications', $id, 'apartment_id');
+
+		foreach ($fields['specifications'] as $specification_id => $value) {
+			if ($value != "") {
+				$this->mysql->insert(
+					'apartment_specifications',
+					[
+						'apartment_id' => $id, 
+						'specification_id' => $specification_id,
+						'value' => $value
+					]
+				);
+			}
+		}
+
 	}
 
 	public function delete($id) {
