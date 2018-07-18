@@ -54,17 +54,21 @@ class MySQLConnection
 
 	public function update($table, $id, $fields) {
 		$pairs = [];
+		$params = [];
 
 		foreach ($fields as $key => $value) {
-			$pairs[] = $key . " = '" . $value . "'";
+			$pairs[] = $key . " = ?";
+			$params[] = $value;
 		}
+
+		$params[] = $id;
 
 		$setString = join(', ', $pairs);
 
 		$sql = "update $table set $setString where id = ?";
 
 		$update = $this->connection->prepare($sql);
-		$update->execute([$id]);
+		$update->execute($params);
 	}
 
 	public function delete($table, $id) {

@@ -14,9 +14,22 @@ class Apartments extends Inventory
 			[
 				'name' => $fields['name'],
 				'details' => $fields['details'],
+				'nr_camere' => $fields['nr_camere'],
+				'suprafata_utila' => $fields['suprafata_utila'],
+				'compartimentare' => $fields['compartimentare'],
+				'confort' => $fields['confort'],
+				'etaj' => $fields['etaj'],
+				'nr_bai' => $fields['nr_bai'],
+				'an_constructie' => $fields['an_constructie'],
+				'structura_rezistenta' => $fields['structura_rezistenta'],
+				'lift' => $fields['lift'],
+				'tip_imobil' => $fields['tip_imobil'],
+				'regim_inaltime' => $fields['regim_inaltime'],
+				'nr_garaje' => $fields['nr_garaje'],
+
 			]
 		);
-		// dd($apartmentId);
+		
 		for ($i = 1; $i < 10; $i++) {
 			if (isset($fields['image' . $i])) {
 				$this->mysql->insert(
@@ -57,22 +70,27 @@ class Apartments extends Inventory
 		return $apartments;
 	}
 
-	public function find($id) {																// 
-		$row = $this->mysql->first('SELECT * FROM apartments where id = ?', [$id]);			//i-a apartamentul din 'apartments' unde id-ul ii '?'
+	public function find($id) {
+		// Aduce randul din baza de date (ca si un array cu key, value) unde id-ul este ceea ce primesc ca si parametru la functie ($id)
+		$row = $this->mysql->first('SELECT * FROM apartments where id = ?', [$id]);
+		// dd($row);
+		$apartment = new Apartment($row);
 
-		$apartment = new Apartment($row);													//creaza un rand nou cu id-ul apartamentului 
-
+		// Aduce toate randurile din baza de date (ca si un array, unde fiecare element este un array cu key, value)
 		$categories = $this->mysql->select('SELECT categories.id, categories.name 			/* */ 
 			FROM categories
-			INNER JOIN specifications on specifications.category_id = categories.id 		/* */
-			INNER JOIN apartment_specifications ON apartment_specifications.specification_id = specifications.id 	/* */
+			INNER JOIN specifications on specifications.category_id = categories.id
+			INNER JOIN apartment_specifications ON apartment_specifications.specification_id = specifications.id
 			where apartment_id = ?
 			GROUP BY categories.id', [$apartment->getId()]
 		);
 
+		// Ii zicem apartamentului sa isi seteze categoriile
 		$apartment->setSpecificationCategories($categories);
 
+		// Pentru fiecare categorie care este atasata apartamentului
 		foreach ($apartment->getSpecificationCategories() as $category) {
+			// Aduce toate randurile din baza de date (ca si un array, unde fiecare element este un array cu key, value)
 			$specifications = $this->mysql->select('SELECT specifications.id, specifications.name, apartment_specifications.value
 				FROM `apartment_specifications`
 				INNER JOIN specifications on specifications.id = apartment_specifications.specification_id
@@ -81,9 +99,17 @@ class Apartments extends Inventory
 					and category_id = ?', [$apartment->getId(), $category->getId()]
 			);
 
+			// Ii zice categoriei sa isi seteze specificatiile
 			$category->setSpecifications($specifications);
 		}
 
+		$apartment_pictures = $this->mysql->select('SELECT apartment_pictures.id, apartment_pictures.url
+			FROM `apartment_pictures`
+			where apartment_id = ?', [$apartment->getId()]);
+
+		$apartment->setApartmentPictures($apartment_pictures);
+
+		// Returneaza apartamentul pe care l-am construit mai sus
 		return $apartment;
 	}
 

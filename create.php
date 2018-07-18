@@ -8,7 +8,7 @@ $inventory = new Categories();
 
 $categories = $inventory->all();
 
-dd($categories);
+// dd($categories);	
 
 ?>
 
@@ -42,27 +42,27 @@ dd($categories);
 		            	<table class="table table-condensed">
 			                <tr>
 			                  <th>Nr. camere</th>
-			                  <td></td>
+			                  <td><input type="text" name="nrcamere" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Suprafata utila:</th>
-			                  <td></td>
+			                  <td><input type="text" name="suprafata_utila" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Compartimentare:</th>
-			                  <td></td>
+			                  <td><input type="text" name="compartimentare" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Confort:</th>
-			                  <td></td>
+			                  <td><input type="text" name="confort" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Etaj:</th>
-			                  <td></td>
+			                  <td><input type="text" name="etaj" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Nr. bai:</th>
-			                  <td></td>
+			                  <td><input type="text" name="nr_bai" class="form-control" value=""/></td>
 			                </tr>
 		            	</table>
 		        	</div>
@@ -70,27 +70,27 @@ dd($categories);
 		            	<table class="table table-condensed">
 			                <tr>
 			                  <th>An constructie:</th>
-			                  <td></td>
+			                  <td><input type="text" name="an_constructie" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Structura rezistenta:</th>
-			                  <td></td>
+			                  <td><input type="text" name="structura_rezistenta" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Lift</th>
-			                  <td></td>
+			                  <td><input type="text" name="lift" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Tip imobil:</th>
-			                  <td></td>
+			                  <td><input type="text" name="tip_imobil" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Regim inaltime:</th>
-			                  <td></td>
+			                  <td><input type="text" name="regim_inaltime" class="form-control" value=""/></td>
 			                </tr>
 			                <tr>
 			                  <th>Nr. garaje:</th>
-			                  <td></td>
+			                  <td><input type="text" name="nr_garaje" class="form-control" value=""/></td>
 			                </tr>
 		            	</table>
 		        	</div>
@@ -124,7 +124,7 @@ dd($categories);
 					</div>
 				</div>
 			</div>
-
+	
 	</div>
 			
 			<div class="row">

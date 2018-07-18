@@ -8,6 +8,9 @@ use App\DB\Inventories\Categories;
 $apartmentInventory = new Apartments();
 
 $apartment = $apartmentInventory->find($_REQUEST['id']);
+// dd($apartment);
+$apartmentPictures = $apartment->getApartmentPictures();
+// dd($apartmentPictures);
 
 $categoriesInventory = new Categories();
 
@@ -45,27 +48,27 @@ $categories = $categoriesInventory->all();
 		            	<table class="table table-condensed">
 			                <tr>
 			                  <th>Nr. camere</th>
-			                  <td></td>
+			                  <td><input type="text" name="nr_camere" class="form-control" value="<?php echo $apartment->getNrCamere(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Suprafata utila:</th>
-			                  <td></td>
+			                  <td><input type="text" name="suprafata_utila" class="form-control" value="<?php echo $apartment->getSuprafataUtila(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Compartimentare:</th>
-			                  <td></td>
+			                  <td><input type="text" name="compartimentare" class="form-control" value="<?php echo $apartment->getCompartimentare(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Confort:</th>
-			                  <td></td>
+			                  <td><input type="text" name="confort" class="form-control" value="<?php echo $apartment->getConfort(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Etaj:</th>
-			                  <td></td>
+			                  <td><input type="text" name="etaj" class="form-control" value="<?php echo $apartment->getEtaj(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Nr. bai:</th>
-			                  <td></td>
+			                  <td><input type="text" name="nr_bai" class="form-control" value="<?php echo $apartment->getNrBai(); ?>"/></td>
 			                </tr>
 		            	</table>
 		        	</div>
@@ -73,27 +76,27 @@ $categories = $categoriesInventory->all();
 		            	<table class="table table-condensed">
 			                <tr>
 			                  <th>An constructie:</th>
-			                  <td></td>
+			                  <td><input type="text" name="an_constructie" class="form-control" value="<?php echo $apartment->getAnConstructie(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Structura rezistenta:</th>
-			                  <td></td>
+			                  <td><input type="text" name="structura_rezistenta" class="form-control" value="<?php echo $apartment->getStructuraRezistenta(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Lift</th>
-			                  <td></td>
+			                  <td><input type="text" name="lift" class="form-control" value="<?php echo $apartment->getLift(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Tip imobil:</th>
-			                  <td></td>
+			                  <td><input type="text" name="tip_imobil" class="form-control" value="<?php echo $apartment->getTipImobil(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Regim inaltime:</th>
-			                  <td></td>
+			                  <td><input type="text" name="regim_inaltime" class="form-control" value="<?php echo $apartment->getRegimInaltime(); ?>"/></td>
 			                </tr>
 			                <tr>
 			                  <th>Nr. garaje:</th>
-			                  <td></td>
+			                  <td><input type="text" name="nr_garaje" class="form-control" value="<?php echo $apartment->getNrGaraje(); ?>"/></td>
 			                </tr>
 		            	</table>
 		        	</div>
@@ -115,7 +118,7 @@ $categories = $categoriesInventory->all();
 												<div class="form-group">
 													<label for="inputEmail3" class="col-sm-6 control-label"><?php echo $specification->getName(); ?></label>
 													<div class="col-sm-6">
-														<input type="text" name="specifications[<?php echo $specification->getId(); ?>]" value="<?php echo $apartment->getSpecificationValue($specification->getId()); ?>"/>
+													<input type="text" name="specifications[<?php echo $specification->getId(); ?>]" value="<?php echo $apartment->getSpecificationValue($specification->getId()); ?>"/>
 													</div>
 												</div>
 											</div>
@@ -127,7 +130,6 @@ $categories = $categoriesInventory->all();
 					</div>
 				</div>
 			</div>
-
 	</div>
 			
 			<div class="row">
@@ -135,7 +137,7 @@ $categories = $categoriesInventory->all();
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-							<input type="text" name="image1" class="form-control" placeholder="Url"/>
+							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[0]->getUrl(); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -144,7 +146,7 @@ $categories = $categoriesInventory->all();
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-							<input type="text" name="image2" class="form-control" placeholder="Url"/>
+							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[1]->getUrl(); ?>"/>
 						</div>
 					</div>			
 				</div>
@@ -154,7 +156,7 @@ $categories = $categoriesInventory->all();
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-							<input type="text" name="image3" class="form-control" placeholder="Url"/>
+							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[2]->getUrl(); ?>"/>
 						</div>
 					</div>
 				</div>
@@ -163,7 +165,7 @@ $categories = $categoriesInventory->all();
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-							<input type="text" name="image4" class="form-control" placeholder="Url"/>
+							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[3]->getUrl(); ?>"/>
 						</div>
 					</div>			
 				</div>
@@ -171,7 +173,7 @@ $categories = $categoriesInventory->all();
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-							<input type="text" name="image5" class="form-control" placeholder="Url"/>
+							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[4]->getUrl(); ?>"/>
 						</div>
 					</div>			
 				</div>
@@ -180,7 +182,7 @@ $categories = $categoriesInventory->all();
 					<div class="form-group">
 						<label for="inputEmail3" class="col-sm-2 control-label">Image</label>
 						<div class="col-sm-10">
-							<input type="text" name="image6" class="form-control" placeholder="Url"/>
+							<input type="text" name="apartment_pictures" class="form-control" value="<?php echo $apartmentPictures[5]->getUrl(); ?>"/>
 						</div>
 					</div>			
 				</div>
