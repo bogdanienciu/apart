@@ -1,3 +1,3 @@
 "# auto" 
 
-# [Vezi Demo](https://bogdanienciu.github.io/apart/)
+# [Vezi Demo](https://github.com/bogdanienciu/apart/)
