@@ -8,5 +8,3 @@
 		create new content,
 		editing new / old content,
 		delete content.
-
-# [See Demo](https://bogdanienciu.github.io/apart/)
